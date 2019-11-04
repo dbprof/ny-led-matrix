@@ -204,8 +204,8 @@ RTC_DS1307 rtc;
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #ifndef STASSID
-#define STASSID "4ISTONET2_BEE8" 
-#define STAPSK  "MgMfWhEb"
+#define STASSID "ssid" 
+#define STAPSK  "passwor"
 #endif
 const char* host = "LOLIN_LED";
 const char* ssid = STASSID;
