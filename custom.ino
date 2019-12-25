@@ -19,62 +19,41 @@ String stDays;
 String WriteDays(int iDays){
   int iDays2 = (iDays/10) %10;
   iDays = iDays %10;
-  if (iDays2==1)return " ДНЕЙ";
+  if (iDays2 == 1)return " ДНЕЙ";
   else{
-    if (iDays==1) return " ДЕНЬ";
-    else if(iDays==2 || iDays==3 || iDays==4) return " ДНЯ";
+    if (iDays == 1) return " ДЕНЬ";
+    else if(iDays == 2 || iDays == 3 || iDays== 4) return " ДНЯ";
     else return " ДНЕЙ";
+  }
+}
+
+String WriteHours(int iHours){
+  if (iHours == 1 || iHours == 21)return " ЧАС";
+  else if ((iHours >= 2 && iHours <= 4) || (iHours >= 22 && iHours <= 24))return " ЧАСА";
+  else return " ЧАСОВ";
+}
+
+String WriteMinutes(int iMinutes){
+  if (iMinutes >= 5 || iMinutes <= 20) return " МИНУТ";
+  else {
+    iMinutes = iMinutes %10;
+    if (iMinutes == 1) return " МИНУТА";
+    else if (iMinutes >= 2 || iMinutes <=4) return " МИНУТЫ";
+    else return " МИНУТ";
+  }
+}
+
+String WriteCounter(TimeSpan tsCurRemained){
+  int iDays = tsCurRemained.days();
+  int iHours = tsCurRemained.hours();
+  if (iDays > 1) return String(tsCurRemained.days(),DEC) + WriteDays(tsCurRemained.days());
+  else {
+    if (iHours > 1) return String(tsCurRemained.hours(),DEC) + WriteHours(tsCurRemained.hours());
+    else return String(tsCurRemained.minutes(),DEC) + WriteMinutes(tsCurRemained.minutes());
   }
 }
 /////////////////////////COUNTER///////////////////////////////////
 
-
-
-/*
-   Режимы:
-    clockRoutine();       // часы на чёрном фоне
-
-   Эффекты:
-    sparklesRoutine();    // случайные цветные гаснущие вспышки
-    snowRoutine();        // снег
-    matrixRoutine();      // "матрица"
-    starfallRoutine();    // звездопад (кометы)
-    ballRoutine();        // квадратик
-    ballsRoutine();       // шарики
-    rainbowRoutine();     // радуга во всю матрицу горизонтальная
-    rainbowDiagonalRoutine();   // радуга во всю матрицу диагональная
-    fireRoutine();        // огонь
-
-  Крутые эффекты "шума":
-    madnessNoise();       // цветной шум во всю матрицу
-    cloudNoise();         // облака
-    lavaNoise();          // лава
-    plasmaNoise();        // плазма
-    rainbowNoise();       // радужные переливы
-    rainbowStripeNoise(); // полосатые радужные переливы
-    zebraNoise();         // зебра
-    forestNoise();        // шумящий лес
-    oceanNoise();         // морская вода
-
-  Игры:
-    snakeRoutine();     // змейка
-    tetrisRoutine();    // тетрис
-    mazeRoutine();      // лабиринт
-    runnerRoutine();    // бегалка прыгалка
-    flappyRoutine();    // flappy bird
-    arkanoidRoutine();  // арканоид
-
-  Бегущая строка:
-    fillString("Ваш текст", цвет);    // цвет вида 0x00ff25 или CRGB::Red и проч. цвета
-    fillString("Ваш текст", 1);       // радужный перелив текста
-    fillString("Ваш текст", 2);       // каждая буква случайным цветом!
-
-  Рисунки и анимации:
-    loadImage(<название массива>);    // основная функция вывода картинки
-    imageRoutine1();                  // пример использования
-    animation1();                     // пример анимации
-
-*/
 
 // ************************* СВОЙ СПИСОК РЕЖИМОВ ************************
 // список можно менять, соблюдая его структуру. Можно удалять и добавлять эффекты, ставить их в
@@ -83,107 +62,32 @@ String WriteDays(int iDays){
 //  break;
 
 // не забудьте указать количество режимов для корректного переключения с последнего на первый
-#define MODES_AMOUNT 10   // количество кастомных режимов (которые переключаются сами или кнопкой)
+#define MODES_AMOUNT 6   // количество кастомных режимов (которые переключаются сами или кнопкой)
 
 
 void customModes() {
   switch (thisMode) {
-    case 0: fireRoutine();
+    case 0: starfallRoutine();
       break;
-    case 1: fillString("СКОРО НОВЫЙ ГОД!!!", CRGB::Red);
-      break;
-    case 2: starfallRoutine();
-      break;
-    case 3: matrixRoutine();
-      break;
-
-/////////////////////////COUNTER///////////////////////////////////
-    case 4:
+////////////////////////COUNTER///////////////////////////////////
+    case 1:
       { 
       dtNow = rtc.now();
       tsRemained = dtHappyNewYear - dtNow;
-      fillString("ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsRemained.days(),DEC) + WriteDays(tsRemained.days()), CRGB::Green);
+      fillString("ДО НОВОГО ГОДА ОСТАЛОСЬ - " + WriteCounter(tsRemained), CRGB::Green);
       }
       break;
 /////////////////////////COUNTER///////////////////////////////////
 
-    case 5: snowRoutine();
+    case 2: snowRoutine();
       break;
-    case 6: ballsRoutine();
+    case 3: ballsRoutine();
       break;
-    case 7: clockRoutine();
+    case 4: sparklesRoutine();
       break;
-    case 8: sparklesRoutine();
+    case 5: rainbowNoise();
       break;
-    case 9: rainbowNoise();
-      break;
-//    case 1: cloudNoise();
-//      break;
-//    case 9: zebraNoise();
-//      break;
-   
-   
-    /*
-    case 0: clockRoutine();
-      break;
-    case 1: fillString("РАДУГА", 1); //fillString("КРАСНЫЙ", CRGB::Red);
-      break;
-    case 2: fillString("RGB LED", 2);
-      break;
-    case 3: madnessNoise();
-      break;
-    case 4: cloudNoise();
-      break;
-    case 5: lavaNoise();
-      break;
-    case 6: plasmaNoise();
-      break;
-    case 7: rainbowNoise();
-      break;
-    case 8: rainbowStripeNoise();
-      break;
-    case 9: zebraNoise();
-      break;
-    case 10: forestNoise();
-      break;
-    case 11: oceanNoise();
-      break;
-    case 12: snowRoutine();
-      break;
-    case 13: sparklesRoutine();
-      break;
-    case 14: matrixRoutine();
-      break;
-    case 15: starfallRoutine();
-      break;
-    case 16: ballRoutine();
-      break;
-    case 17: ballsRoutine();
-      break;
-    case 18: rainbowRoutine();
-      break;
-    case 19: rainbowDiagonalRoutine();
-      break;
-    case 20: fireRoutine();
-      break;
-    case 21: snakeRoutine();
-      break;
-    case 22: tetrisRoutine();
-      break;
-    case 23: mazeRoutine();
-      break;
-    case 24: runnerRoutine();
-      break;
-    case 25: flappyRoutine();
-      break;
-    case 26: arkanoidRoutine();
-      break;
-    case 27: clockRoutine();
-      break;
-  */
-
   }
-
 }
 
 // функция загрузки картинки в матрицу. должна быть здесь, иначе не работает =)
@@ -197,29 +101,6 @@ void loadImage(uint16_t (*frame)[WIDTH]) {
   // 3) gammaCorrection - проводим коррекцию цвета для более корректного отображения
 }
 //timerMinim gifTimer(D_GIF_SPEED);
-
-// ********************** ПРИМЕРЫ ВЫВОДА КАРТИНОК ***********************
-
-// Внимание! Если размер матрицы не совпадает с исходным размером матрицы в скетче
-// (если вы только что  его скачали), то нужно удалить/закомментировать данные функции!
-//
-/*
-  // показать картинку
-  void imageRoutine1() {
-  if (loadingFlag) {
-    loadingFlag = false;
-    loadImage(frame00);
-  }
-  }
-
-  void animation1() {
-  if (gifTimer.isReady()) {
-    frameNum++;
-    if (frameNum >= sizeof(framesArray)) frameNum = 0;
-    loadImage(framesArray[frameNum]);
-  }
-  }
-*/
 
 // ********************* ОСНОВНОЙ ЦИКЛ РЕЖИМОВ *******************
 #if (SMOOTH_CHANGE == 1)
