@@ -43,13 +43,34 @@ String WriteMinutes(int iMinutes){
   }
 }
 
+String WriteSeconds(int iSeconds){
+  if (iSeconds >= 5 || iSeconds <= 20) return " СЕКУНД";
+  else {
+    iSeconds = iSeconds %10;
+    if (iSeconds == 1) return " СЕКУНДА";
+    else if (iSeconds >= 2 || iSeconds <=4) return " СЕКУНДЫ";
+    else return " СЕКУНД";
+  }
+}
+
 String WriteCounter(TimeSpan tsCurRemained){
   int iDays = tsCurRemained.days();
   int iHours = tsCurRemained.hours();
-  if (iDays > 1) return String(tsCurRemained.days(),DEC) + WriteDays(tsCurRemained.days());
+  int iMinutes = tsCurRemained.minutes();
+  int iSeconds = tsCurRemained.seconds();
+  
+  if (iDays > 1) return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.days(),DEC) + WriteDays(tsCurRemained.days());
   else {
-    if (iHours > 1) return String(tsCurRemained.hours(),DEC) + WriteHours(tsCurRemained.hours());
-    else return String(tsCurRemained.minutes(),DEC) + WriteMinutes(tsCurRemained.minutes());
+    if (iHours > 1) return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.hours(),DEC) + WriteHours(tsCurRemained.hours());
+    else {
+      if (iMinutes > 1)return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.minutes(),DEC) + WriteMinutes(tsCurRemained.minutes());
+      else {
+        if (iSeconds > 1)return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.seconds(),DEC) + WriteSeconds(tsCurRemained.seconds());
+        else {
+          return String("С НОВЫМ ГОДОМ!!!");
+        }
+      }
+    }
   }
 }
 /////////////////////////COUNTER///////////////////////////////////
@@ -74,7 +95,7 @@ void customModes() {
       { 
       dtNow = rtc.now();
       tsRemained = dtHappyNewYear - dtNow;
-      fillString("ДО НОВОГО ГОДА ОСТАЛОСЬ - " + WriteCounter(tsRemained), CRGB::Green);
+      fillString(WriteCounter(tsRemained), CRGB::Green);
       }
       break;
 /////////////////////////COUNTER///////////////////////////////////
