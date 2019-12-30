@@ -59,13 +59,13 @@ String WriteCounter(TimeSpan tsCurRemained){
   int iMinutes = tsCurRemained.minutes();
   int iSeconds = tsCurRemained.seconds();
   
-  if (iDays > 1) return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.days(),DEC) + WriteDays(tsCurRemained.days());
+  if (iDays >= 1) return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(iDays) + WriteDays(iDays) + " " + String(iHours) + WriteHours(iHours);
   else {
-    if (iHours > 1) return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.hours(),DEC) + WriteHours(tsCurRemained.hours());
+    if (iHours >= 1) return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(iHours) + WriteHours(iHours);
     else {
-      if (iMinutes > 1)return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.minutes(),DEC) + WriteMinutes(tsCurRemained.minutes());
+      if (iMinutes >= 1)return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(iMinutes) + WriteMinutes(iMinutes);
       else {
-        if (iSeconds > 1)return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(tsCurRemained.seconds(),DEC) + WriteSeconds(tsCurRemained.seconds());
+        if (iSeconds >= 1)return "ДО НОВОГО ГОДА ОСТАЛОСЬ - " + String(iSeconds) + WriteSeconds(iSeconds);
         else {
           return String("С НОВЫМ ГОДОМ!!!");
         }
