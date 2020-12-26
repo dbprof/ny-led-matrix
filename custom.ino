@@ -34,21 +34,21 @@ String WriteHours(int iHours){
 }
 
 String WriteMinutes(int iMinutes){
-  if (iMinutes >= 5 || iMinutes <= 20) return " МИНУТ";
+  if (iMinutes >= 5 && iMinutes <= 20) return " МИНУТ";
   else {
     iMinutes = iMinutes %10;
     if (iMinutes == 1) return " МИНУТА";
-    else if (iMinutes >= 2 || iMinutes <=4) return " МИНУТЫ";
+    else if (iMinutes >= 2 && iMinutes <=4) return " МИНУТЫ";
     else return " МИНУТ";
   }
 }
 
 String WriteSeconds(int iSeconds){
-  if (iSeconds >= 5 || iSeconds <= 20) return " СЕКУНД";
+  if (iSeconds >= 5 && iSeconds <= 20) return " СЕКУНД";
   else {
     iSeconds = iSeconds %10;
     if (iSeconds == 1) return " СЕКУНДА";
-    else if (iSeconds >= 2 || iSeconds <=4) return " СЕКУНДЫ";
+    else if (iSeconds >= 2 && iSeconds <=4) return " СЕКУНДЫ";
     else return " СЕКУНД";
   }
 }
